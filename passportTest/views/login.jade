@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  link(rel='stylesheet' href='/stylesheets/loginstyle.css')
   .container
     .form-group.login_form_top(size='width' name='login_form')
       h1 log in 
@@ -14,3 +15,7 @@ block content
       &nbsp;
       a(href='/')
         button#signup.submit(type='submit') Sign up
+//- 必要なライブラリをインストール
+//- $ npm install passport --save
+//- $ npm install passport-local --save
+//- $ npm install express-session --save

@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 var LocalStrategy = require('passport-local').Strategy;
 passport.use(new LocalStrategy({
-  usernameField: 'user_id',
+  usernameField: 'username',
   passwordField: 'password',
   passReqToCallback: true,
   session: false,
