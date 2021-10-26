@@ -4,8 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var passport = require('passport'); // 追記
-var LocalStrategy = require('passport-local').Strategy; // 追記
+var passport = require('passport'); 
+var LocalStrategy = require('passport-local').Strategy; 
+var session = require('express-session'); // 追記
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -21,8 +22,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 追記ここから====================================================
+// セッションミドルウェア設定
+app.use(session({ resave:false,saveUninitialized:false, secret: 'passport test' })); // 追記
+
 app.use(passport.initialize());
+app.use(passport.session()); // 追記
 var LocalStrategy = require('passport-local').Strategy;
 passport.use(new LocalStrategy({
   usernameField: 'username',
@@ -39,7 +43,17 @@ passport.use(new LocalStrategy({
     }
   })
 }));
-// 追記ここまで====================================================
+
+// 以下追記=================================================
+passport.serializeUser(function (user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+  done(null, user);
+});
+// ここまで追記===============================================
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
